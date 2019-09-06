@@ -10,7 +10,8 @@
     ],
     "require": {
         "php": "^7.2",
-        "mandrill/mandrill": "1.0.55"
+        "mandrill/mandrill": "1.0.55",
+        "monolog/monolog": "2.0.0"
     },
     "require-dev": {
         "fzaninotto/faker": "^1.4",
