@@ -22,10 +22,9 @@ class MandrillSenderService
      * @param Mandrill $mandrill
      * @param Logger $logger
      */
-    public function __construct(Mandrill $mandrill, Logger $logger)
+    public function __construct(Mandrill $mandrill)
     {
         $this->mandrill = $mandrill;
-        $this->log = $logger;
     }
 
     /**
