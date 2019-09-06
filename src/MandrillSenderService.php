@@ -12,10 +12,6 @@ class MandrillSenderService
      * @var Mandrill
      */
     private $mandrill;
-    /**
-     * @var Logger
-     */
-    private $log;
 
     /**
      * MandrillSenderService constructor.
