@@ -2,8 +2,6 @@
 namespace MandrillSender;
 
 use Illuminate\Support\ServiceProvider;
-use Monolog\Handler\StreamHandler;
-use Monolog\Logger;
 use Mandrill;
 
 class MandrillSenderServiceProvider extends ServiceProvider
@@ -16,7 +14,7 @@ class MandrillSenderServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->publishes([
-            __DIR__ . '/../config/mandrillSender.php' => config_path('mandrillSender.php'),
+            __DIR__ . '/../config/mandrill_sender.php' => config_path('mandrill_sender.php'),
         ]);
     }
 
@@ -28,10 +26,10 @@ class MandrillSenderServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton(MandrillSenderService::class, function () {
-            return new MandrillSenderService(new Mandrill(), (new Logger('mandrillSender'))->pushHandler(new StreamHandler(config('mandrillSender.log_path'))));
+            return new MandrillSenderService(new Mandrill());
         });
 
-        $this->mergeConfigFrom( __DIR__ . '/../config/mandrillSender.php', 'mandrillSender');
+        $this->mergeConfigFrom( __DIR__ . '/../config/mandrill_sender.php', 'mandrill_sender');
     }
 
 }

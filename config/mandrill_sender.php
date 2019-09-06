@@ -6,6 +6,7 @@ if (!defined('MANDRILL_APIKEY')) {
 return [
     'api_key' => env('MANDRILL_APIKEY'),
     'log_path' => storage_path('logs/mandrillSender.log'),
+    'debug' => true,
     'templates' => [
 
     ]
