@@ -20,7 +20,6 @@ class MandrillSenderService
     /**
      * MandrillSenderService constructor.
      * @param Mandrill $mandrill
-     * @param Logger $logger
      */
     public function __construct(Mandrill $mandrill)
     {
