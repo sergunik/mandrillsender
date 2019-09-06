@@ -12,20 +12,14 @@ class MandrillSenderService
      * @var Mandrill
      */
     private $mandrill;
-    /**
-     * @var Logger
-     */
-    private $log;
 
     /**
      * MandrillSenderService constructor.
      * @param Mandrill $mandrill
-     * @param Logger $logger
      */
-    public function __construct(Mandrill $mandrill, Logger $logger)
+    public function __construct(Mandrill $mandrill)
     {
         $this->mandrill = $mandrill;
-        $this->log = $logger;
     }
 
     /**
