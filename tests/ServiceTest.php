@@ -24,8 +24,9 @@ class ServiceTest extends TestCase
     private function getPlaceholders(): array
     {
         return [
-            'foo' => 'bar',
-            'email' => 'foo@gmail.com'
+            '*|SUBJECT|*' => 'Test Email',
+            '*|TO|*' => 'test@gmail.com',
+            'email' => 'test@gmail.com'
         ];
     }
 
@@ -62,6 +63,8 @@ class ServiceTest extends TestCase
 
         Mail::assertSent(MailTemplate::class, function ($mail) use ($placeholders) {
             $this->assertTrue($mail->hasTo($placeholders['email']));
+            $this->assertContains($placeholders['*|SUBJECT|*'], $placeholders);
+            $this->assertContains($placeholders['*|TO|*'], $placeholders);
             return $mail;
         });
     }
