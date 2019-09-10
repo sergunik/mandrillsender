@@ -36,7 +36,7 @@ class MandrillSenderService
         try {
             Mail::to($to)->send($mailTemplate);
         } catch (\Exception $exception) {
-            throw new CantSendException($to);
+            throw new CantSendException($to, $exception->getMessage());
         }
     }
 }
