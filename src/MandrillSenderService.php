@@ -5,6 +5,7 @@ namespace MandrillSender;
 use Illuminate\Support\Facades\Mail;
 use Mandrill;
 use MandrillSender\Exceptions\CantSendException;
+use MandrillSender\Mail\MailTemplate;
 
 class MandrillSenderService
 {
@@ -23,33 +24,19 @@ class MandrillSenderService
     }
 
     /**
-     * @param string $to
-     * @param string $subject
-     * @param string $content
-     * @throws CantSendException
-     */
-    private function _send(string $to, string $subject, string $content)
-    {
-        try {
-            Mail::send([], [], function ($message) use ($to, $subject, $content) {
-                $message->to($to)
-                    ->subject($subject)
-                    ->setBody($content, 'text/html');
-            });
-        } catch (\Exception $exception) {
-            throw new CantSendException($to);
-        }
-    }
-
-    /**
      * @param array $placeholders
      * @param string $templateName
      * @throws CantSendException
      */
     public function sendTemplate(array $placeholders, string $templateName)
     {
-        $template = $this->mandrill->templates->info($templateName);
-        $content = str_replace(array_keys($placeholders), $placeholders, $template['code']);
-        $this->_send($placeholders['email'], $template['subject'], $content);
+        $mailTemplate = new MailTemplate($this->mandrill, $placeholders, $templateName);
+        $to = $placeholders['email'];
+
+        try {
+            Mail::to($to)->send($mailTemplate);
+        } catch (\Exception $exception) {
+            throw new CantSendException($to);
+        }
     }
 }
