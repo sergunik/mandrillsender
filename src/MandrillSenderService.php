@@ -2,9 +2,9 @@
 
 namespace MandrillSender;
 
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Mandrill;
-use MandrillSender\Exceptions\CantSendException;
 use MandrillSender\Mail\MailTemplate;
 
 class MandrillSenderService
@@ -32,11 +32,14 @@ class MandrillSenderService
     {
         $mailTemplate = new MailTemplate($this->mandrill, $placeholders, $templateName);
         $to = $placeholders['email'];
-
         try {
             Mail::to($to)->send($mailTemplate);
         } catch (\Exception $exception) {
-            throw new CantSendException($to, $exception->getMessage());
+            Log::warning('Mail Exception', [
+                'to' => $to,
+                'code' => $exception->getCode(),
+                'message' => $exception->getMessage()
+            ]);
         }
     }
 }
