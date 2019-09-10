@@ -20,7 +20,13 @@
     },
     "autoload": {
         "psr-4": {
-            "MandrillSender\\": "src"
+            "MandrillSender\\": "src",
+            "MailTemplate\\": "src/Mail"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests"
         }
     },
     "minimum-stability": "dev"
