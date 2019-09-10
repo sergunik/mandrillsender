@@ -2,11 +2,15 @@
 
 namespace MandrillSender\Mail;
 
+use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
+use Illuminate\Queue\SerializesModels;
 use \Mandrill;
 
 class MailTemplate extends Mailable
 {
+    use Queueable, SerializesModels;
+
     /**
      * @var Mandrill
      */
@@ -41,5 +45,13 @@ class MailTemplate extends Mailable
     {
         $template = $this->mandrill->templates->info($this->templateName);
         return str_replace(array_keys($this->placeholders), $this->placeholders, $template['code']);
+    }
+
+    /**
+     * @return string
+     */
+    public function build(): string
+    {
+        return $this->html;
     }
 }
