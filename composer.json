@@ -11,7 +11,7 @@
     "require": {
         "php": "^7.2",
         "mandrill/mandrill": "1.0.55",
-        "monolog/monolog": "^1.12|^2.0"
+        "illuminate/mail": "5.8.*"
     },
     "require-dev": {
         "fzaninotto/faker": "^1.4",
