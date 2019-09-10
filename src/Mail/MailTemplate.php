@@ -45,7 +45,6 @@ class MailTemplate extends Mailable
     {
         $template = $this->mandrill->templates->info($this->templateName);
         return str_replace(array_keys($this->placeholders), $this->placeholders, $template['code']);
-
     }
 
     /**
