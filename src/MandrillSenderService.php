@@ -30,11 +30,11 @@ class MandrillSenderService
      */
     public function sendTemplate(array $placeholders, string $templateName)
     {
-        $template = new MailTemplate($this->mandrill, $placeholders, $templateName);
+        $mailTemplate = new MailTemplate($this->mandrill, $placeholders, $templateName);
         $to = $placeholders['email'];
 
         try {
-            Mail::to($to)->send($template);
+            Mail::to($to)->send($mailTemplate);
         } catch (\Exception $exception) {
             throw new CantSendException($to);
         }
