@@ -10,6 +10,7 @@ use Tests\TestCase;
 
 class ServiceTest extends TestCase
 {
+    private $email = 'test@gmail.com';
     /**
      * @return string
      */
@@ -25,8 +26,7 @@ class ServiceTest extends TestCase
     {
         return [
             '*|SUBJECT|*' => 'Test Email',
-            '*|TO|*' => 'test@gmail.com',
-            'email' => 'test@gmail.com'
+            '*|TO|*' => 'test@gmail.com'
         ];
     }
 
@@ -47,6 +47,7 @@ class ServiceTest extends TestCase
         $Mandrill = Mockery::mock(\Mandrill::class);
         $Mandrill->templates = $MandrillTemplates;
 
+
         return $Mandrill;
     }
 
@@ -59,10 +60,10 @@ class ServiceTest extends TestCase
         $placeholders = $this->getPlaceholders();
         $mandrill = $this->createMandrillMock();
         $mandrillService = new MandrillSenderService($mandrill);
-        $mandrillService->sendTemplate($placeholders, 'tpl');
+        $mandrillService->sendTemplate($this->email, $placeholders, 'tpl');
 
         Mail::assertSent(MailTemplate::class, function ($mail) use ($placeholders) {
-            $this->assertTrue($mail->hasTo($placeholders['email']));
+            $this->assertTrue($mail->hasTo($this->email));
             $this->assertContains($placeholders['*|SUBJECT|*'], $placeholders);
             $this->assertContains($placeholders['*|TO|*'], $placeholders);
             return $mail;
