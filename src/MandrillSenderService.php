@@ -24,19 +24,18 @@ class MandrillSenderService
     }
 
     /**
+     * @param string $email
      * @param array $placeholders
      * @param string $templateName
-     * @throws CantSendException
      */
-    public function sendTemplate(array $placeholders, string $templateName)
+    public function sendTemplate(string $email, array $placeholders, string $templateName)
     {
         $mailTemplate = new MailTemplate($this->mandrill, $placeholders, $templateName);
-        $to = $placeholders['email'];
         try {
-            Mail::to($to)->send($mailTemplate);
+            Mail::to($email)->send($mailTemplate);
         } catch (\Exception $exception) {
             Log::warning('Mail Exception', [
-                'to' => $to,
+                'to' => $email,
                 'code' => $exception->getCode(),
                 'message' => $exception->getMessage()
             ]);
