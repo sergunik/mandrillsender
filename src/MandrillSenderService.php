@@ -32,7 +32,7 @@ class MandrillSenderService
     {
         $mailTemplate = new MailTemplate($this->mandrill, $placeholders, $templateName);
         try {
-            Mail::to($email)->subject($mailTemplate->subject = '')->send($mailTemplate);
+            Mail::to($email)->subject($mailTemplate->subject)->send($mailTemplate);
         } catch (\Exception $exception) {
             Log::warning('Mail Exception', [
                 'to' => $email,

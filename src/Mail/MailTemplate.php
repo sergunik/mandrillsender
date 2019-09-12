@@ -46,7 +46,7 @@ class MailTemplate extends Mailable
     private function getHtmlTemplate(): string
     {
         $template = $this->mandrill->templates->info($this->templateName);
-        $this->subject = $template['subject'];
+        $this->subject = $template['subject'] ?? config('mandrill_sender.default_subject');
         return str_replace(array_keys($this->placeholders), $this->placeholders, $template['code']);
     }
 
