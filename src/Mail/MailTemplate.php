@@ -55,6 +55,7 @@ class MailTemplate extends Mailable
      */
     public function build(): string
     {
+        $this->subject($this->subject);
         return $this->html;
     }
 }
