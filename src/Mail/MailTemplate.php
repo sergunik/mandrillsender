@@ -23,9 +23,17 @@ class MailTemplate extends Mailable
      * @var string
      */
     private $templateName;
-
+    /**
+     * @var string
+     */
     public $subject;
-
+    /**
+     * @var string
+     */
+    public $markup;
+    /**
+     * @var array
+     */
     public $files;
 
     /**
@@ -41,7 +49,7 @@ class MailTemplate extends Mailable
         $this->placeholders = $placeholders;
         $this->templateName = $templateName;
         $this->files = $files;
-        $this->html = $this->getHtmlTemplate();
+        $this->markup = $this->getHtmlTemplate();
     }
 
     /**
@@ -55,14 +63,14 @@ class MailTemplate extends Mailable
     }
 
     /**
-     * @return string
+     * @return MailTemplate
      */
-    public function build()
+    public function build(): MailTemplate
     {
-        $message = $this->html($this->html);
+        $this->html($this->markup);
         foreach ($this->files as $file){
-            $message->attach($file);
+            $this->attach($file);
         }
-        return $message;
+        return $this;
     }
 }
