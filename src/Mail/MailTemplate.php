@@ -23,21 +23,33 @@ class MailTemplate extends Mailable
      * @var string
      */
     private $templateName;
-
+    /**
+     * @var string
+     */
     public $subject;
+    /**
+     * @var string
+     */
+    public $markup;
+    /**
+     * @var array
+     */
+    public $files;
 
     /**
      * MailTemplate constructor.
      * @param Mandrill $mandrill
      * @param array $placeholders
      * @param string $templateName
+     * @param array $files
      */
-    public function __construct(Mandrill $mandrill, array $placeholders, string $templateName)
+    public function __construct(Mandrill $mandrill, array $placeholders, string $templateName, array $files = [])
     {
         $this->mandrill = $mandrill;
         $this->placeholders = $placeholders;
         $this->templateName = $templateName;
-        $this->html = $this->getHtmlTemplate();
+        $this->files = $files;
+        $this->markup = $this->getHtmlTemplate();
     }
 
     /**
@@ -51,10 +63,14 @@ class MailTemplate extends Mailable
     }
 
     /**
-     * @return string
+     * @return MailTemplate
      */
-    public function build(): string
+    public function build(): MailTemplate
     {
-        return $this->html;
+        $this->html($this->markup);
+        foreach ($this->files as $file){
+            $this->attach($file);
+        }
+        return $this;
     }
 }
